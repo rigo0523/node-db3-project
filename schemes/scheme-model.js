@@ -8,20 +8,31 @@ module.exports = {
   update,
   remove,
 };
+
+// /api/schemes
 function find() {
   return db("schemes");
 }
 
+// /api/schemes/:id
 function findById(id) {
   return db("schemes").where({ id: id }).first();
 }
 
+// /api/schemes/1/steps
 function findSteps(id) {
   return db("steps")
     .join("schemes", "steps.scheme_id", "=", "schemes.id")
-    .where({ scheme_id: id });
+    .where({ scheme_id: id })
+    .select(
+      "schemes.id",
+      "schemes.scheme_name",
+      "steps.step_number",
+      "steps.instructions"
+    );
 }
 
+// /api/schemes
 function add(newScheme) {
   return db("schemes")
     .insert(newScheme, "id")
@@ -33,6 +44,7 @@ function add(newScheme) {
   // });
 }
 
+// /api/schemes/:id
 function update(changes, id) {
   return db("schemes")
     .where({ id: id })
@@ -42,6 +54,7 @@ function update(changes, id) {
     });
 }
 
+// api/schemes/:id
 function remove(id) {
   return db("schemes").where("id", id).del();
 }
