@@ -1,4 +1,4 @@
-const db = require("../data/db-config");
+const db = require("../database/dbConfig");
 
 module.exports = {
   find,
@@ -16,7 +16,7 @@ function find() {
 
 // /api/schemes/:id
 function findById(id) {
-  return db("schemes").where({ id: id }).first();
+  return db("schemes").where({ id }).first();
 }
 
 // /api/schemes/1/steps
@@ -50,7 +50,7 @@ function update(changes, id) {
     .where({ id: id })
     .update(changes)
     .then((ids) => {
-      return findById(id);
+      return findById(id).first();
     });
 }
 
