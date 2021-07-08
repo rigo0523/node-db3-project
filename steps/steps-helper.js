@@ -6,9 +6,9 @@ module.exports = {
 };
 
 function get() {
-  return db("steps");
+  return db("steps").select("*");
 }
 
 function getbyID(id) {
-  return db("steps").where({ id });
+  return db("steps").where("id", id).first();
 }

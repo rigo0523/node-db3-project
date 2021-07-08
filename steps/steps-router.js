@@ -3,7 +3,7 @@ const router = express.Router();
 const Steps = require("./steps-helper");
 
 //GET /api/steps
-router.use("/", (req, res, next) => {
+router.get("/", (req, res, next) => {
   Steps.get()
     .then((step) => {
       res.status(200).json(step);
@@ -13,9 +13,12 @@ router.use("/", (req, res, next) => {
 
 router.get("/:id", (req, res, next) => {
   const { id } = req.params;
+  console.log("test--->", id);
   Steps.getbyID(id)
     .then((car) => {
-      res.json(car);
+      car
+        ? res.status(200).json(car)
+        : res.status(401).json({ message: `can't find id of ${id}` });
     })
     .catch((err) => next(err));
 });
