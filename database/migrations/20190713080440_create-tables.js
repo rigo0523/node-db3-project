@@ -5,7 +5,7 @@ exports.up = function (knex) {
       tbl.text("scheme_name", 128).unique().notNullable();
     })
     .createTable("steps", (tbl) => {
-      tbl.increments();
+      tbl.increments("id");
       tbl.integer("step_number").notNullable();
       tbl.text("instructions").notNullable();
       tbl
